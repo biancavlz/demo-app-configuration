@@ -4,6 +4,7 @@ import RootLayout from "./layouts/RootLayout";
 import Home from "./pages/Home";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
+import UserDetails from "./features/users/UserDetails";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "about",
         Component: About,
+      },
+      {
+        path: "/users/:userId",
+        element: <UserDetails />,
       },
     ],
   },

@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import { getUsers } from "../../services/apiUsers";
+import { Link } from "react-router";
 
 type User = {
   id: string | number;
@@ -18,7 +19,9 @@ function PostList() {
   return (
     <ul>
       {data?.map((user) => (
-        <li key={user.id}>{user.name}</li>
+        <li key={user.id}>
+          {user.name} <Link to={`/users/${user.id}`}>View details</Link>
+        </li>
       ))}
     </ul>
   );
