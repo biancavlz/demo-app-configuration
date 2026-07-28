@@ -17,13 +17,16 @@ function PostList() {
   if (error) return <p>Error loading users</p>;
 
   return (
-    <ul>
-      {data?.map((user) => (
-        <li key={user.id}>
-          {user.name} <Link to={`/users/${user.id}`}>View details</Link>
-        </li>
-      ))}
-    </ul>
+    <>
+      <h2>Users List</h2>
+      <ul>
+        {data?.map((user) => (
+          <li key={user.id}>
+            {user.name} <Link to={`/users/${user.id}`}>View details</Link>
+          </li>
+        ))}
+      </ul>
+    </>
   );
 }
 
