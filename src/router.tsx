@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import UserDetails from "./features/users/UserDetails";
+import CreateUser from "./features/users/CreateUser";
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
       {
         path: "/users/:userId",
         element: <UserDetails />,
+      },
+      {
+        path: "/users/new",
+        element: <CreateUser />,
       },
     ],
   },

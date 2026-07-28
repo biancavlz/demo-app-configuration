@@ -31,7 +31,12 @@ function PostList() {
 
   return (
     <div className="mx-auto max-w-4xl">
-      <h2 className="mb-6 text-3xl font-bold text-gray-900">Users</h2>
+      <div className="mx-auto flex max-w-6xl items-center justify-between">
+        <h2 className="mb-6 text-3xl font-bold text-gray-900">Users</h2>
+        <Link className="hover:text-indigo-600" to={`/users/new`}>
+          Add a user
+        </Link>
+      </div>
 
       <div className="space-y-4">
         {data?.map((user) => (
