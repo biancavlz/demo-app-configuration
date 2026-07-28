@@ -1,3 +1,5 @@
+import type { UserFormData } from "../features/users/schemas/userSchema";
+
 export async function getUsers() {
   const response = await fetch("https://jsonplaceholder.typicode.com/users");
 
@@ -20,24 +22,7 @@ export async function getUserById(userId: number) {
   return response.json();
 }
 
-export interface NewUser {
-  name: string;
-  username: string;
-  email: string;
-  phone: string;
-  website: string;
-  address: {
-    street: string;
-    suite: string;
-    city: string;
-    zipcode: string;
-  };
-  company: {
-    name: string;
-  };
-}
-
-export const createUser = async (data: NewUser) => {
+export const createUser = async (data: UserFormData) => {
   const response = await fetch("https://jsonplaceholder.typicode.com/users", {
     method: "POST",
     headers: {

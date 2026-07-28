@@ -1,6 +1,8 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createUser, type NewUser } from "../../services/apiUsers";
+import { createUser } from "../../services/apiUsers";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { userSchema, type UserFormData } from "./schemas/userSchema";
 import toast from "react-hot-toast";
 
 function CreateUserForm() {
@@ -11,7 +13,9 @@ function CreateUserForm() {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<NewUser>({
+  } = useForm<UserFormData>({
+    resolver: zodResolver(userSchema),
+
     defaultValues: {
       name: "",
       username: "",
@@ -52,7 +56,7 @@ function CreateUserForm() {
     },
   });
 
-  const onSubmit = (data: NewUser) => {
+  const onSubmit = (data: UserFormData) => {
     mutation.mutate(data);
   };
 
@@ -105,9 +109,7 @@ function CreateUserForm() {
 
               <input
                 id="username"
-                {...register("username", {
-                  required: "Username is required",
-                })}
+                {...register("username")}
                 aria-invalid={!!errors.username}
                 aria-describedby={
                   errors.username ? "username-error" : undefined
@@ -130,13 +132,7 @@ function CreateUserForm() {
               <input
                 id="email"
                 type="email"
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+\.\S+$/,
-                    message: "Invalid email address",
-                  },
-                })}
+                {...register("email")}
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
                 className={inputClass}
@@ -156,9 +152,7 @@ function CreateUserForm() {
 
               <input
                 id="phone"
-                {...register("phone", {
-                  required: "Phone is required",
-                })}
+                {...register("phone")}
                 aria-invalid={!!errors.phone}
                 aria-describedby={errors.phone ? "phone-error" : undefined}
                 className={inputClass}
@@ -198,9 +192,7 @@ function CreateUserForm() {
 
                 <input
                   id="street"
-                  {...register("address.street", {
-                    required: "Street is required",
-                  })}
+                  {...register("address.street")}
                   aria-invalid={!!errors.address?.street}
                   aria-describedby={
                     errors.address?.street ? "street-error" : undefined
@@ -235,9 +227,7 @@ function CreateUserForm() {
 
                 <input
                   id="city"
-                  {...register("address.city", {
-                    required: "City is required",
-                  })}
+                  {...register("address.city")}
                   aria-invalid={!!errors.address?.city}
                   aria-describedby={
                     errors.address?.city ? "city-error" : undefined
@@ -259,9 +249,7 @@ function CreateUserForm() {
 
                 <input
                   id="zipcode"
-                  {...register("address.zipcode", {
-                    required: "Zip code is required",
-                  })}
+                  {...register("address.zipcode")}
                   aria-invalid={!!errors.address?.zipcode}
                   aria-describedby={
                     errors.address?.zipcode ? "zipcode-error" : undefined
