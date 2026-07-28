@@ -1,6 +1,7 @@
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createUser, type NewUser } from "../../services/apiUsers";
+import toast from "react-hot-toast";
 
 function CreateUserForm() {
   const queryClient = useQueryClient();
@@ -39,11 +40,15 @@ function CreateUserForm() {
         queryKey: ["users"],
       });
 
+      toast.success("User created successfully!");
+
       reset();
     },
 
     onError: (error) => {
       console.error(error.message);
+
+      toast.error(error.message || "Failed to create user");
     },
   });
 
@@ -300,18 +305,6 @@ function CreateUserForm() {
             >
               {mutation.isPending ? "Creating User..." : "Create User"}
             </button>
-
-            {mutation.isSuccess && (
-              <p role="status" className="text-sm font-medium text-green-700">
-                ✅ User created successfully!
-              </p>
-            )}
-
-            {mutation.isError && (
-              <p role="alert" className="text-sm font-medium text-red-600">
-                ❌ {mutation.error.message}
-              </p>
-            )}
           </div>
         </form>
       </div>
