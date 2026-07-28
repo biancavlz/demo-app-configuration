@@ -51,149 +51,270 @@ function CreateUserForm() {
     mutation.mutate(data);
   };
 
+  const inputClass =
+    "w-full rounded-lg border border-gray-300 px-4 py-2.5 outline-none transition focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200";
+  const labelClass = "mb-2 block text-sm font-medium text-gray-700";
+  const erroClass = "mt-2 text-sm text-red-600";
+
   return (
-    <div>
-      <h2>Create a User</h2>
+    <div className="mx-auto max-w-3xl">
+      <div className="rounded-xl border border-gray-200 bg-white p-8 shadow-sm">
+        <h2 className="mb-8 text-3xl font-bold text-gray-900">Create User</h2>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <label>Name</label>
-          <br />
-          <input
-            {...register("name", {
-              required: "Name is required",
-            })}
-          />
-          {errors.name && <p>{errors.name.message}</p>}
-        </div>
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          className="space-y-8"
+          noValidate
+        >
+          <fieldset className="space-y-6">
+            <legend className="mb-4 text-lg font-semibold text-gray-900">
+              Personal Information
+            </legend>
 
-        <br />
+            <div>
+              <label htmlFor="name" className={labelClass}>
+                Name
+              </label>
 
-        <div>
-          <label>Username</label>
-          <br />
-          <input
-            {...register("username", {
-              required: "Username is required",
-            })}
-          />
-          {errors.username && <p>{errors.username.message}</p>}
-        </div>
+              <input
+                id="name"
+                {...register("name", {
+                  required: "Name is required",
+                })}
+                aria-invalid={!!errors.name}
+                aria-describedby={errors.name ? "name-error" : undefined}
+                className={inputClass}
+              />
 
-        <br />
+              {errors.name && (
+                <p id="name-error" role="alert" className={erroClass}>
+                  {errors.name.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label>Email</label>
-          <br />
-          <input
-            type="email"
-            {...register("email", {
-              required: "Email is required",
-              pattern: {
-                value: /^\S+@\S+\.\S+$/,
-                message: "Invalid email address",
-              },
-            })}
-          />
+            <div>
+              <label htmlFor="username" className={labelClass}>
+                Username
+              </label>
 
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
+              <input
+                id="username"
+                {...register("username", {
+                  required: "Username is required",
+                })}
+                aria-invalid={!!errors.username}
+                aria-describedby={
+                  errors.username ? "username-error" : undefined
+                }
+                className={inputClass}
+              />
 
-        <br />
+              {errors.username && (
+                <p id="username-error" role="alert" className={erroClass}>
+                  {errors.username.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label>Phone</label>
-          <br />
-          <input
-            {...register("phone", {
-              required: "Phone is required",
-            })}
-          />
+            <div>
+              <label htmlFor="email" className={labelClass}>
+                Email
+              </label>
 
-          {errors.phone && <p>{errors.phone.message}</p>}
-        </div>
+              <input
+                id="email"
+                type="email"
+                {...register("email", {
+                  required: "Email is required",
+                  pattern: {
+                    value: /^\S+@\S+\.\S+$/,
+                    message: "Invalid email address",
+                  },
+                })}
+                aria-invalid={!!errors.email}
+                aria-describedby={errors.email ? "email-error" : undefined}
+                className={inputClass}
+              />
 
-        <br />
+              {errors.email && (
+                <p id="email-error" role="alert" className={erroClass}>
+                  {errors.email.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label>Website</label>
-          <br />
-          <input {...register("website")} placeholder="example.com" />
-        </div>
+            <div>
+              <label htmlFor="phone" className={labelClass}>
+                Phone
+              </label>
 
-        <hr />
+              <input
+                id="phone"
+                {...register("phone", {
+                  required: "Phone is required",
+                })}
+                aria-invalid={!!errors.phone}
+                aria-describedby={errors.phone ? "phone-error" : undefined}
+                className={inputClass}
+              />
 
-        <h3>Address</h3>
+              {errors.phone && (
+                <p id="phone-error" role="alert" className={erroClass}>
+                  {errors.phone.message}
+                </p>
+              )}
+            </div>
 
-        <div>
-          <label>Street</label>
-          <br />
-          <input
-            {...register("address.street", {
-              required: "Street is required",
-            })}
-          />
+            <div>
+              <label htmlFor="website" className={labelClass}>
+                Website
+              </label>
 
-          {errors.address?.street && <p>{errors.address.street.message}</p>}
-        </div>
+              <input
+                id="website"
+                placeholder="example.com"
+                {...register("website")}
+                className={inputClass}
+              />
+            </div>
+          </fieldset>
 
-        <br />
+          <fieldset className="space-y-6 border-t border-gray-200 pt-8">
+            <legend className="mb-4 text-lg font-semibold text-gray-900">
+              Address
+            </legend>
 
-        <div>
-          <label>Suite</label>
-          <br />
-          <input {...register("address.suite")} placeholder="Apt. 101" />
-        </div>
+            <div className="grid gap-6 md:grid-cols-2">
+              <div>
+                <label htmlFor="street" className={labelClass}>
+                  Street
+                </label>
 
-        <br />
+                <input
+                  id="street"
+                  {...register("address.street", {
+                    required: "Street is required",
+                  })}
+                  aria-invalid={!!errors.address?.street}
+                  aria-describedby={
+                    errors.address?.street ? "street-error" : undefined
+                  }
+                  className={inputClass}
+                />
 
-        <div>
-          <label>City</label>
-          <br />
-          <input
-            {...register("address.city", {
-              required: "City is required",
-            })}
-          />
+                {errors.address?.street && (
+                  <p id="street-error" role="alert" className={erroClass}>
+                    {errors.address.street.message}
+                  </p>
+                )}
+              </div>
 
-          {errors.address?.city && <p>{errors.address.city.message}</p>}
-        </div>
+              <div>
+                <label htmlFor="suite" className={labelClass}>
+                  Suite
+                </label>
 
-        <br />
+                <input
+                  id="suite"
+                  placeholder="Apt. 101"
+                  {...register("address.suite")}
+                  className={inputClass}
+                />
+              </div>
 
-        <div>
-          <label>Zip Code</label>
-          <br />
-          <input
-            {...register("address.zipcode", {
-              required: "Zip code is required",
-            })}
-          />
+              <div>
+                <label htmlFor="city" className={labelClass}>
+                  City
+                </label>
 
-          {errors.address?.zipcode && <p>{errors.address.zipcode.message}</p>}
-        </div>
+                <input
+                  id="city"
+                  {...register("address.city", {
+                    required: "City is required",
+                  })}
+                  aria-invalid={!!errors.address?.city}
+                  aria-describedby={
+                    errors.address?.city ? "city-error" : undefined
+                  }
+                  className={inputClass}
+                />
 
-        <hr />
+                {errors.address?.city && (
+                  <p id="city-error" role="alert" className={erroClass}>
+                    {errors.address.city.message}
+                  </p>
+                )}
+              </div>
 
-        <h3>Company</h3>
-        <div>
-          <label>Company Name</label>
-          <br />
-          <input {...register("company.name")} placeholder="Acme Inc." />
-        </div>
+              <div>
+                <label htmlFor="zipcode" className={labelClass}>
+                  Zip Code
+                </label>
 
-        <br />
+                <input
+                  id="zipcode"
+                  {...register("address.zipcode", {
+                    required: "Zip code is required",
+                  })}
+                  aria-invalid={!!errors.address?.zipcode}
+                  aria-describedby={
+                    errors.address?.zipcode ? "zipcode-error" : undefined
+                  }
+                  className={inputClass}
+                />
 
-        <button type="submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Creating User..." : "Create User"}
-        </button>
+                {errors.address?.zipcode && (
+                  <p id="zipcode-error" role="alert" className={erroClass}>
+                    {errors.address.zipcode.message}
+                  </p>
+                )}
+              </div>
+            </div>
+          </fieldset>
 
-        {mutation.isSuccess && (
-          <p style={{ color: "green" }}>✅ User created successfully!</p>
-        )}
+          <fieldset className="space-y-6 border-t border-gray-200 pt-8">
+            <legend className="mb-4 text-lg font-semibold text-gray-900">
+              Company
+            </legend>
 
-        {mutation.isError && <p>❌ {mutation.error.message}</p>}
-      </form>
+            <div>
+              <label htmlFor="company-name" className={labelClass}>
+                Company Name
+              </label>
+
+              <input
+                id="company-name"
+                placeholder="Acme Inc."
+                {...register("company.name")}
+                className={inputClass}
+              />
+            </div>
+          </fieldset>
+
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center">
+            <button
+              type="submit"
+              disabled={mutation.isPending}
+              className="rounded-lg bg-indigo-600 px-6 py-2.5 font-medium text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:bg-indigo-300"
+            >
+              {mutation.isPending ? "Creating User..." : "Create User"}
+            </button>
+
+            {mutation.isSuccess && (
+              <p role="status" className="text-sm font-medium text-green-700">
+                ✅ User created successfully!
+              </p>
+            )}
+
+            {mutation.isError && (
+              <p role="alert" className="text-sm font-medium text-red-600">
+                ❌ {mutation.error.message}
+              </p>
+            )}
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
