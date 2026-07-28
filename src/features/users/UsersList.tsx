@@ -13,20 +13,44 @@ function PostList() {
     queryFn: getUsers,
   });
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p>Error loading users</p>;
+  if (isLoading) {
+    return (
+      <div className="flex justify-center py-10">
+        <p className="text-gray-500">Loading users...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700">
+        Error loading users.
+      </div>
+    );
+  }
 
   return (
-    <>
-      <h2>Users List</h2>
-      <ul>
+    <div className="mx-auto max-w-4xl">
+      <h2 className="mb-6 text-3xl font-bold text-gray-900">Users</h2>
+
+      <div className="space-y-4">
         {data?.map((user) => (
-          <li key={user.id}>
-            {user.name} <Link to={`/users/${user.id}`}>View details</Link>
-          </li>
+          <div
+            key={user.id}
+            className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
+          >
+            <h3 className="text-lg font-medium text-gray-800">{user.name}</h3>
+
+            <Link
+              to={`/users/${user.id}`}
+              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+            >
+              View details
+            </Link>
+          </div>
         ))}
-      </ul>
-    </>
+      </div>
+    </div>
   );
 }
 
