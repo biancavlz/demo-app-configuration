@@ -2,6 +2,8 @@ import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { getUsers, deleteUser } from "../../services/apiUsers";
 import { Link } from "react-router";
+import { useState } from "react";
+import ConfirmDialog from "../../components/ConfirmDialog";
 
 type User = {
   id: string | number;
@@ -9,6 +11,8 @@ type User = {
 };
 
 function PostList() {
+  const [userToDelete, setUserToDelete] = useState<User | null>(null);
+
   const queryClient = useQueryClient();
 
   const { data, isLoading, error } = useQuery<User[]>({
@@ -32,14 +36,14 @@ function PostList() {
     },
   });
 
-  const handleDelete = (id: number) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this user?",
-    );
+  const handleConfirmDelete = () => {
+    if (!userToDelete) return;
 
-    if (!confirmed) return;
-
-    deleteMutation.mutate(id);
+    deleteMutation.mutate(Number(userToDelete.id), {
+      onSuccess: () => {
+        setUserToDelete(null);
+      },
+    });
   };
 
   if (isLoading) {
@@ -85,12 +89,23 @@ function PostList() {
 
               <button
                 type="button"
-                onClick={() => handleDelete(Number(user.id))}
+                onClick={() => setUserToDelete(user)}
                 disabled={deleteMutation.isPending}
                 className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-300"
               >
                 Delete
               </button>
+
+              <ConfirmDialog
+                isOpen={!!userToDelete}
+                title="Delete user"
+                message={`Are you sure you want to delete "${userToDelete?.name}"? This action cannot be undone.`}
+                confirmLabel="Delete"
+                cancelLabel="Cancel"
+                isLoading={deleteMutation.isPending}
+                onCancel={() => setUserToDelete(null)}
+                onConfirm={handleConfirmDelete}
+              />
             </div>
           </div>
         ))}
