@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { getUsers } from "../../services/apiUsers";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { getUsers, deleteUser } from "../../services/apiUsers";
 import { Link } from "react-router";
 
 type User = {
@@ -8,10 +9,38 @@ type User = {
 };
 
 function PostList() {
+  const queryClient = useQueryClient();
+
   const { data, isLoading, error } = useQuery<User[]>({
     queryKey: ["users"],
     queryFn: getUsers,
   });
+
+  const deleteMutation = useMutation({
+    mutationFn: deleteUser,
+
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["users"],
+      });
+
+      toast.success("User deleted successfully!");
+    },
+
+    onError: (error: Error) => {
+      toast.error(error.message);
+    },
+  });
+
+  const handleDelete = (id: number) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this user?",
+    );
+
+    if (!confirmed) return;
+
+    deleteMutation.mutate(id);
+  };
 
   if (isLoading) {
     return (
@@ -46,12 +75,23 @@ function PostList() {
           >
             <h3 className="text-lg font-medium text-gray-800">{user.name}</h3>
 
-            <Link
-              to={`/users/${user.id}`}
-              className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
-            >
-              View details
-            </Link>
+            <div className="flex gap-3">
+              <Link
+                to={`/users/${user.id}`}
+                className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
+              >
+                View details
+              </Link>
+
+              <button
+                type="button"
+                onClick={() => handleDelete(Number(user.id))}
+                disabled={deleteMutation.isPending}
+                className="rounded-lg bg-red-600 px-4 py-2 text-sm font-medium text-white transition hover:bg-red-700 disabled:cursor-not-allowed disabled:bg-red-300"
+              >
+                Delete
+              </button>
+            </div>
           </div>
         ))}
       </div>
