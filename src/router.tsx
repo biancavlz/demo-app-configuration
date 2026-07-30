@@ -6,6 +6,7 @@ import About from "./pages/About";
 import NotFound from "./pages/NotFound";
 import UserDetails from "./features/users/UserDetails";
 import CreateUser from "./features/users/CreateUser";
+import EditUser from "./features/users/EditUser";
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: "/users/new",
         element: <CreateUser />,
+      },
+      {
+        path: "/users/:userId/edit",
+        element: <EditUser />,
       },
     ],
   },

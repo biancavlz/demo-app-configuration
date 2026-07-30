@@ -87,6 +87,13 @@ function PostList() {
                 View details
               </Link>
 
+              <Link
+                to={`/users/${user.id}/edit`}
+                className="rounded-lg bg-amber-500 px-4 py-2 text-sm font-medium text-white transition hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2"
+              >
+                Edit
+              </Link>
+
               <button
                 type="button"
                 onClick={() => setUserToDelete(user)}

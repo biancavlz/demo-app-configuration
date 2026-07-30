@@ -38,6 +38,31 @@ export const createUser = async (data: UserFormData) => {
   return await response.json();
 };
 
+export const updateUser = async ({
+  id,
+  data,
+}: {
+  id: number;
+  data: UserFormData;
+}) => {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/users/${id}`,
+    {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    },
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to update user");
+  }
+
+  return response.json();
+};
+
 export const deleteUser = async (id: number) => {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/users/${id}`,
