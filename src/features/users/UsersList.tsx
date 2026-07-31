@@ -75,6 +75,7 @@ function PostList() {
         {data?.map((user) => (
           <div
             key={user.id}
+            data-testid={`user-row-${user.id}`}
             className="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md"
           >
             <h3 className="text-lg font-medium text-gray-800">{user.name}</h3>
@@ -102,21 +103,21 @@ function PostList() {
               >
                 Delete
               </button>
-
-              <ConfirmDialog
-                isOpen={!!userToDelete}
-                title="Delete user"
-                message={`Are you sure you want to delete "${userToDelete?.name}"? This action cannot be undone.`}
-                confirmLabel="Delete"
-                cancelLabel="Cancel"
-                isLoading={deleteMutation.isPending}
-                onCancel={() => setUserToDelete(null)}
-                onConfirm={handleConfirmDelete}
-              />
             </div>
           </div>
         ))}
       </div>
+
+      <ConfirmDialog
+        isOpen={!!userToDelete}
+        title="Delete user"
+        message={`Are you sure you want to delete "${userToDelete?.name}"? This action cannot be undone.`}
+        confirmLabel="Delete"
+        cancelLabel="Cancel"
+        isLoading={deleteMutation.isPending}
+        onCancel={() => setUserToDelete(null)}
+        onConfirm={handleConfirmDelete}
+      />
     </div>
   );
 }
