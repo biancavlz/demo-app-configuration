@@ -1,0 +1,2 @@
+echo "Running pre-push checks: lint, unit tests, e2e tests..."
+npm run prepush
