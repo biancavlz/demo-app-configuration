@@ -1,7 +1,10 @@
 import type { UserFormData } from "../features/users/schemas/userSchema";
+import { env } from "../config/env";
+
+const USERS_ENDPOINT = `${env.apiBaseUrl}/users`;
 
 export async function getUsers() {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users");
+  const response = await fetch(USERS_ENDPOINT);
 
   if (!response.ok) {
     throw new Error("Failed to fetch users");
@@ -11,9 +14,7 @@ export async function getUsers() {
 }
 
 export async function getUserById(userId: number) {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${userId}`,
-  );
+  const response = await fetch(`${USERS_ENDPOINT}/${userId}`);
 
   if (!response.ok) {
     throw new Error("Failed to fetch user");
@@ -23,7 +24,7 @@ export async function getUserById(userId: number) {
 }
 
 export const createUser = async (data: UserFormData) => {
-  const response = await fetch("https://jsonplaceholder.typicode.com/users", {
+  const response = await fetch(USERS_ENDPOINT, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -45,16 +46,13 @@ export const updateUser = async ({
   id: number;
   data: UserFormData;
 }) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`,
-    {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
+  const response = await fetch(`${USERS_ENDPOINT}/${id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
     },
-  );
+    body: JSON.stringify(data),
+  });
 
   if (!response.ok) {
     throw new Error("Failed to update user");
@@ -64,12 +62,9 @@ export const updateUser = async ({
 };
 
 export const deleteUser = async (id: number) => {
-  const response = await fetch(
-    `https://jsonplaceholder.typicode.com/users/${id}`,
-    {
-      method: "DELETE",
-    },
-  );
+  const response = await fetch(`${USERS_ENDPOINT}/${id}`, {
+    method: "DELETE",
+  });
 
   if (!response.ok) {
     throw new Error("Failed to delete user");
