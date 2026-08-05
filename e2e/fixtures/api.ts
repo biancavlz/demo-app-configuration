@@ -8,7 +8,10 @@ const USERS_API_URL = "https://jsonplaceholder.typicode.com/users**";
  * in-memory copy instead, so tests are deterministic and don't depend
  * on network access or jsonplaceholder's shared state.
  */
-export async function mockUsersApi(page: Page, initialUsers: MockUser[] = seedUsers) {
+export async function mockUsersApi(
+  page: Page,
+  initialUsers: MockUser[] = seedUsers,
+) {
   let users = [...initialUsers];
 
   await page.route(USERS_API_URL, async (route) => {

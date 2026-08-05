@@ -12,7 +12,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.queryByRole("dialog")).not.toBeInTheDocument();
@@ -26,7 +26,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole("dialog")).toBeInTheDocument();
@@ -42,7 +42,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole("button", { name: "Cancel" })).toHaveFocus();
@@ -58,7 +58,7 @@ describe("ConfirmDialog", () => {
         cancelLabel="Keep"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     expect(screen.getByRole("button", { name: "Delete" })).toBeInTheDocument();
@@ -76,7 +76,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={onConfirm}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
     await user.click(screen.getByRole("button", { name: "Confirm" }));
@@ -95,7 +95,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={onCancel}
-      />
+      />,
     );
 
     await user.click(screen.getByRole("button", { name: "Cancel" }));
@@ -114,7 +114,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={onCancel}
-      />
+      />,
     );
 
     await user.click(screen.getByRole("presentation"));
@@ -133,7 +133,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={onCancel}
-      />
+      />,
     );
 
     await user.click(screen.getByText("Are you sure?"));
@@ -152,7 +152,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={onCancel}
-      />
+      />,
     );
 
     await user.keyboard("{Escape}");
@@ -172,7 +172,7 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={onCancel}
-      />
+      />,
     );
 
     await user.keyboard("{Escape}");
@@ -189,12 +189,10 @@ describe("ConfirmDialog", () => {
         message="Are you sure?"
         onConfirm={vi.fn()}
         onCancel={vi.fn()}
-      />
+      />,
     );
 
-    expect(
-      screen.getByRole("button", { name: "Deleting..." })
-    ).toBeDisabled();
+    expect(screen.getByRole("button", { name: "Deleting..." })).toBeDisabled();
     expect(screen.getByRole("button", { name: "Cancel" })).toBeDisabled();
   });
 });
